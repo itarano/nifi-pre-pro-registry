@@ -1,0 +1,99 @@
+version: "3"
+
+services:
+  zookeeper-test:
+    hostname: zookeeper-test
+    container_name: zookeeper-test
+    image: 'bitnami/zookeeper:latest'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks: 
+      - registry
+  zookeeper-pro:
+    hostname: zookeeper-pro
+    container_name: zookeeper-pro
+    image: 'bitnami/zookeeper:latest'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks: 
+      - registry
+  nifi-test:
+    container_name: nifi-test
+    image: apache/nifi:1.11.4
+    ports:
+      - ${NIFI_TEST_IP_PORT:-127.0.0.1:8080}:8080
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+      - NIFI_CLUSTER_IS_NODE=true
+      - NIFI_CLUSTER_NODE_PROTOCOL_PORT=8082
+      - NIFI_ZK_CONNECT_STRING=zookeeper-test:2181
+      - NIFI_ELECTION_MAX_WAIT=10 s
+    depends_on:
+      - zookeeper-test
+    networks: 
+      - registry
+  nifi-pro:
+    container_name: nifi-pro
+    image: apache/nifi:1.11.4
+    ports:
+      - ${NIFI_PRO_IP_PORT:-127.0.0.1:8081}:8080
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+      - NIFI_CLUSTER_IS_NODE=true
+      - NIFI_CLUSTER_NODE_PROTOCOL_PORT=8082
+      - NIFI_ZK_CONNECT_STRING=zookeeper-pro:2181
+      - NIFI_ELECTION_MAX_WAIT=10 s
+    depends_on:
+      - zookeeper-pro
+    networks: 
+      - registry
+  registry:
+    container_name: registry
+    hostname: registry
+    image: apache/nifi-registry
+    ports:
+      - ${REGISTRY_IP_PORT:-127.0.0.1:18080}:18080
+    environment:
+      - LOG_LEVEL=INFO
+      - NIFI_REGISTRY_DB_URL=${REGISTRY_DB_URL:-jdbc:h2:./database/nifi-registry-primary;AUTOCOMMIT=OFF;DB_CLOSE_ON_EXIT=FALSE;LOCK_MODE=3;LOCK_TIMEOUT=25000;WRITE_DELAY=0;AUTO_SERVER=FALSE}
+      - NIFI_REGISTRY_DB_CLASS=${REGISTRY_DB_CLASS:-org.h2.Driver}
+      - NIFI_REGISTRY_DB_DIR=/Library/PostgreSQL/pgJDBC
+      - NIFI_REGISTRY_DB_USER=${REGISTRY_DB_USER:-nifireg}
+      - NIFI_REGISTRY_DB_PASS=${REGISTRY_DB_PASS:-nifireg}
+      - NIFI_REGISTRY_FLOW_PROVIDER=${REGISTRY_FLOW_PROVIDER:-file}
+      - NIFI_REGISTRY_FLOW_STORAGE_DIR=./${REGISTRY_FLOW_STORAGE:-flow_storage}
+      - NIFI_REGISTRY_GIT_REMOTE=${REGISTRY_GIT_REMOTE}
+      - NIFI_REGISTRY_GIT_USER=${REGISTRY_GIT_USER}
+      - NIFI_REGISTRY_GIT_PASSWORD=${REGISTRY_GIT_TOKEN}
+    volumes:
+      - ./volumes/nifi-registry/drivers/postgres:/Library/PostgreSQL/pgJDBC
+      - ./volumes/nifi-registry/git/${REGISTRY_FLOW_STORAGE:-flow_storage}:/opt/nifi-registry/nifi-registry-current/${REGISTRY_FLOW_STORAGE:-flow_storage}
+    networks: 
+      - registry
+  postgresql:
+    container_name: postgresql
+    hostname: postgresql
+    image: "postgres" # use latest official postgres version
+    environment:
+      - POSTGRES_USER=${PG_USER:-admin}
+      - POSTGRES_PASSWORD=${PG_PASS:-1234}
+      - POSTGRES_DB=${PG_DB:-nifi-registry}
+    networks:
+      - registry
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG4_USER:-admin}
+      - PGADMIN_DEFAULT_PASSWORD=${PG4_PASS:-1234}
+    ports:
+      - ${PG_IP_PORT:-127.0.0.1:5050}:80
+    networks:
+      - registry
+
+networks:
+  registry:
+    ipam:
+      driver: default
+      config:
+       - subnet: 172.19.0.0/24
