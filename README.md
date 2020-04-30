@@ -1,4 +1,4 @@
-# nifi-test-pro-registry
+# nifi-pre-pro-registry
 
 **Completar: 1. Guía de uso 2. CI/CD**
 
