@@ -84,10 +84,10 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PG4_USER:-admin}
-      - PGADMIN_DEFAULT_PASSWORD=${PG4_PASS:-1234}
+      - PGADMIN_DEFAULT_EMAIL=${PGA_USER:-admin}
+      - PGADMIN_DEFAULT_PASSWORD=${PGA_PASS:-1234}
     ports:
-      - ${PG_IP_PORT:-127.0.0.1:5050}:80
+      - ${PGA_IP_PORT:-127.0.0.1:5050}:80
     networks:
       - registry
 

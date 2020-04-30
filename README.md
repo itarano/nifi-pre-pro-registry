@@ -13,7 +13,7 @@
 - Apache Zookeeper &rarr; latest
 - PostgreSQL &rarr; latest
 - Apache NiFi Registry &rarr; latest
-- pgadmin &rarr; latest
+- pgAdmin &rarr; latest
 
 ## Estructura del proyecto
 - Fichero *.env* donde se recogen variables utilizadas en el fichero *docker-compose.yml*.
