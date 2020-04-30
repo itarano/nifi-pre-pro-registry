@@ -1,8 +1,6 @@
 # nifi-test-pro-registry
 
-**Completar**
-1. Guía de uso
-2. CI/CD
+**Completar: 1. Guía de uso 2. CI/CD**
 
 ## Local Software
 - Docker and Docker Compose
