@@ -7,7 +7,7 @@
 - Git local host client (en caso de querer utilizar git como repositorio para versionar los flujos)
 
 ## Docker Environment Software
-- Apache NiFi &rarr; 1.11.4
+- Apache NiFi &rarr; latest
 - Apache Zookeeper &rarr; latest
 - PostgreSQL &rarr; latest
 - Apache NiFi Registry &rarr; latest
