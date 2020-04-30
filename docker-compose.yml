@@ -73,7 +73,7 @@ services:
   postgresql:
     container_name: postgresql
     hostname: postgresql
-    image: "postgres" # use latest official postgres version
+    image: "postgres"
     environment:
       - POSTGRES_USER=${PG_USER:-admin}
       - POSTGRES_PASSWORD=${PG_PASS:-1234}
