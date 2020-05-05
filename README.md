@@ -1,7 +1,5 @@
 # nifi-pre-pro-registry
 
-**Completar: 1. Guía de uso 2. CI/CD**
-
 ## Requisitos
 - Docker and Docker Compose
 - En caso de querer utilizar git como repositorio para versionar los flujos:
