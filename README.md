@@ -1,5 +1,7 @@
 # nifi-pre-pro-registry
 
+![Index Management](/assets/arquitecture.png)
+
 ## Requisitos
 - Docker and Docker Compose
 - En caso de querer utilizar git como repositorio para versionar los flujos:
