@@ -70,18 +70,23 @@ def read_env(file, section):
     print('Using {0} properties...'.format(section))
     return settings    
 
-services = get_compose_services()
+def parseArgs(services):
+    # Create the parser
+    parser = argparse.ArgumentParser(description='Services: ' + str(list(services)))
 
-# Create the parser
-parser = argparse.ArgumentParser(description='Services: ' + str(list(services)))
-
-# Add the arguments
-parser.add_argument('env', metavar='environment', type=str,
+    # Add the arguments
+    parser.add_argument('env', metavar='environment', type=str,
                     help='section environment to use')
-parser.add_argument('-s', metavar='services', type=str, nargs='+',
+    parser.add_argument('-s', metavar='services', type=str, nargs='+',
                     help='services (i.e. service1 service2 ...)')
 
-# Execute the parse_args() method
-args = parser.parse_args()
+    # return the parse_args() method
+    return parser.parse_args()
 
-start(args.env, args.s, services)
+def main():
+    services = get_compose_services()
+    args = parseArgs(services)
+    start(args.env, args.s, services)
+
+if __name__ == "__main__":
+    main()
