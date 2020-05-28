@@ -3,7 +3,7 @@
 ![Index Management](/assets/arquitecture.png)
 
 ## Requisitos
-- Docker and Docker Compose
+- Docker Compose
 - En caso de querer utilizar git como repositorio para versionar los flujos:
     1. Git CLI
     2. Git Control Version (Github, Gitlab...)
