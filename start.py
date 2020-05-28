@@ -13,7 +13,7 @@ def get_args_services(shell_services, compose_services):
     docker_services = set()
     if shell_services is not None:
         for service in shell_services:
-            if not service in services:
+            if not service in compose_services:
                 print('Some of the specified service does not exist' + 
                         '\nServices: ' + str(list(compose_services)))
                 sys.exit(1)
@@ -40,7 +40,7 @@ def start(environment, shell_services, compose_services):
         services = compose_services
     pre_up_do(services, env, environment)
             
-    command = ("docker-compose.exe up --build -d {}".
+    command = ("docker-compose up --build -d {}".
                format(str(services).replace('{', '').replace(',', '').replace('}', '')))
     subprocess.call(command, shell=True)
 
@@ -63,7 +63,7 @@ def pre_up_do(services, env, section):
         else:
             services.remove('postgresql')
             services.remove('pgadmin')
-
+            
 def read_env(file, section):
     settings = configparser.ConfigParser()
     settings.read(file)
