@@ -24,3 +24,18 @@
 
 ## Deployment
 - Linux o Windows ([WSL 2](https://devblogs.microsoft.com/commandline/announcing-wsl-2/)) &rarr; [**start.py**](https://github.com/itarano/nifi-pre-pro-registry/blob/master/start.py)
+
+```console
+USER@HOSTNAME:~/projects/nifi-pre-pro-registry$ ./start.py -h
+usage: start.py [-h] [-s services [services ...]] environment
+
+Services: ['pgadmin', 'nifi-pro', 'nifi-pre', 'postgresql', 'zookeeper-pre', 'zookeeper-pro', 'registry']
+
+positional arguments:
+  environment           section environment to use
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s services [services ...]
+                        services (i.e. service1 service2 ...)
+```
