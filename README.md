@@ -5,8 +5,8 @@
 ## Requisitos
 - Docker and Docker Compose
 - En caso de querer utilizar git como repositorio para versionar los flujos:
-    1. Cliente local git
-    2. Cuenta en GitHub
+    1. Git CLI
+    2. Git Control Version (Github, Gitlab...)
 
 ## Docker Environment Software
 - Apache NiFi &rarr; latest
